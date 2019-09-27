@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import static proyecto1.Output_calc.getRandomNumber;
 
 /**
  *
@@ -33,23 +34,12 @@ public class Proyecto1 extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException  {
         Lista<Door> Nodos=new Lista();
-        On_Off but=new On_Off("in");
-        but.setSalida(true);
-        Nodos.addFirst(but);
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        
-        Door Puerta=new Door("xor");
-        
-        Puerta.setEntradas(Nodos);
-        
-        System.out.print(Puerta.getSalida());
+    
+//        Lista<String> Lista_Color=Singleton.getInstance().getLista_Color();
+       // System.out.println(Lista_Color.len());
+        System.out.println(Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato());
         
         
         launch(args);

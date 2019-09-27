@@ -23,6 +23,7 @@ import javafx.scene.control.ScrollPane;
 import static javafx.scene.input.KeyCode.T;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 
 
 /**
@@ -36,6 +37,8 @@ public class FXMLDocumentController implements Initializable {
     private Lista<Door> Sistema;
     private int num=0;
     private Lista<Button> Leds;
+    public Lista<Lineas> lines;
+    public Lineas actualline;
     @FXML
     public AnchorPane anchorpane;
     public Button button1;
@@ -48,18 +51,56 @@ public class FXMLDocumentController implements Initializable {
     public Pane paneXnor;
     public Pane Led;
     public Pane In;
-    public Pane scrollpane;
+    public AnchorPane scrollpane;
 
 
+
+    
+    
+    
+    private void MakeLine(ActionEvent event){
+            Button but=(Button) event.getSource();
+            Lineas linea=new Lineas(this.scrollpane);
+            linea.setPoitA(but);
+            this.actualline=linea;
+           // ActualiceLines();
+    }
+   
+    private void MakeLine2(MouseEvent event){
+            Button but=(Button) event.getSource();
+            this.actualline.setPoitB(but);
+            this.actualline.ubicate();
+            this.lines.addFirst(this.actualline);
+            this.actualline=null;
+            //ActualiceLines();
+    }
+    private void MakeLine2(ActionEvent event){
+            Button but=(Button) event.getSource();
+            this.actualline.setPoitB(but);
+            this.actualline.ubicate();
+            this.lines.addFirst(this.actualline);
+            this.actualline=null;
+           // ActualiceLines();
+    }
+    
+    
+    private void  ActualiceLines(){
+        Nodo<Lineas>aux=this.lines.getHead();
+        while(aux!=null){
+            aux.getDato().ubicate();
+            aux=aux.getNext();
+        } 
+    }
+            
+
+       
+    
     
     @FXML
     private void Listo(MouseEvent event) {
         System.out.println("fuck You!");
-        Pane paneichon=(Pane)event.getSource();
-        Button button=new Button("Prueba");
-        button.setLayoutX(paneichon.getLayoutX());
-        button.setLayoutY(paneichon.getLayoutY());
-        scrollpane.getChildren().add(button);
+        ActualiceLines();
+
         
     }
     
@@ -101,7 +142,7 @@ public class FXMLDocumentController implements Initializable {
     }
     private void preConectar(MouseEvent event,Door puerta){
         System.out.println(puerta.getSalida());
-        this.Conector=puerta;             
+        this.Conector=puerta;  
     }
     
     private void preConectar(Door puerta){
@@ -111,7 +152,8 @@ public class FXMLDocumentController implements Initializable {
         if (this.Conector!=null){
             puerta.setEntrada(this.Conector);
             this.Conector=null;       
-        }invokeall_led();
+        }
+        invokeall_led();
     }
     
  
@@ -173,6 +215,7 @@ public class FXMLDocumentController implements Initializable {
         for(int i=0;i<2;i++){
             Button but=new Button ();
             but.setOnMouseClicked(e -> Conectar(e,puerta));
+            but.setOnAction(e -> MakeLine2(e));
             oldpane.getChildren().add(but);
             but.setId(Integer.toString(i));
             but.setLayoutX(x);
@@ -180,8 +223,8 @@ public class FXMLDocumentController implements Initializable {
             but.setPrefSize(7, 7);
             but.setMinSize(7, 7);
             y+=15;
-            Out.setOnMouseClicked(e -> preConectar(e,puerta));
-        }   
+            Out.setOnMouseClicked(e -> preConectar(e,puerta));    
+        }Out.setOnAction(e -> MakeLine(e));
 
     }
     @FXML  
@@ -191,6 +234,7 @@ public class FXMLDocumentController implements Initializable {
         oldpane.getChildren().add(but);
         but.setOnAction(e -> pressOnoffled(e,led));
         this.Leds.addFirst(but);
+        but.setOnMouseClicked(e -> MakeLine2(e));
     }
     @FXML
     private void createONOFF(Pane oldpane){
@@ -199,12 +243,14 @@ public class FXMLDocumentController implements Initializable {
         oldpane.getChildren().add(but);
         but.setOnMouseClicked(e -> pressOnoff(e,interruptor));
        // but.setOnAction(e -> invokeall_led(e));
+        but.setOnAction(e -> MakeLine(e));
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.Sistema=new Lista();
         this.Leds=new Lista();
+        this.lines=new Lista();
        // this.Conector=null;
         MouseControlUtil.makeDraggable(paneOr);
         paneOr.setOnMouseClicked(e -> replace(e,"or",720,10));     
@@ -232,6 +278,8 @@ public class FXMLDocumentController implements Initializable {
         
         MouseControlUtil.makeDraggable(Led);
         Led.setOnMouseClicked(e -> replace(e,"led",765,471));
+        
+        this.actualline=null;
         
         
        

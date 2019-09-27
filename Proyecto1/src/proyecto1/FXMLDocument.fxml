@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="532.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto1.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="694.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto1.FXMLDocumentController">
    <children>
-      <Pane fx:id="pane" prefHeight="532.0" prefWidth="798.0" style="-fx-background-color: red;">
+      <Pane fx:id="pane" prefHeight="694.0" prefWidth="798.0" style="-fx-background-color: red;">
          <children>
             <Pane fx:id="Led" layoutX="765.0" layoutY="471.0" prefHeight="55.0" prefWidth="27.0" style="-fx-background-color: blue;" />
             <Pane fx:id="In" layoutX="720.0" layoutY="490.0" prefHeight="31.0" prefWidth="33.0" style="-fx-background-color: grey;" />
@@ -18,6 +18,7 @@
             <Pane fx:id="paneAnd" layoutX="720.0" layoutY="80.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: skyblue;" />
             <Pane fx:id="paneXor" layoutX="720.0" layoutY="290.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: green;" />
             <Pane fx:id="paneNOr" layoutX="720.0" layoutY="150.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: Orange;" />
+            <Button fx:id="Guardar" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" text="Guardar" />
             <ScrollPane layoutX="4.0" layoutY="5.0" prefHeight="522.0" prefWidth="707.0">
                <content>
                 <AnchorPane fx:id="scrollpane" minHeight="0.0" minWidth="0.0" prefHeight="1015.0" prefWidth="3328.0" />
