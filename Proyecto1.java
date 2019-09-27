@@ -25,33 +25,12 @@ public class Proyecto1 extends Application {
         
         stage.setScene(scene);
         stage.show();
-        
-        
-
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Lista<Door> Nodos=new Lista();
-        On_Off but=new On_Off("in");
-        but.setSalida(true);
-        Nodos.addFirst(but);
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        Nodos.addFirst(new On_Off("In"));
-        
-        Door Puerta=new Door("xor");
-        
-        Puerta.setEntradas(Nodos);
-        
-        System.out.print(Puerta.getSalida());
-        
-        
         launch(args);
     }
     

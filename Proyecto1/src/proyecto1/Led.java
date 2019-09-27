@@ -18,25 +18,31 @@ public class Led extends Door{
         super(Tipo);
         this.Salida=false;
         this.Tipo=Tipo;
+        this.puerta=null;
         
     }
     /**
      *
      * @param Tipo
      * @return 
-     */
-
-    
+     */  
     @Override
     public Boolean getSalida(){
-        
-       Salida=this.puerta.getSalida();
-       return Salida;
-        
+     if (this.puerta!=null){
+         System.out.println("La salida se a calculado");
+        this.Salida=this.puerta.getSalida();
+        return this.Salida;
+     }return false; 
     }
 
-    public void setPuerta(Door puerta) {
-        this.puerta = puerta;
+    @Override
+    public void setEntrada(Door puerta) {
+        if (!"In".equals(puerta.getTipo())){
+            this.puerta = puerta;      
+        }
+    }
+    public Door getEntrada(){
+        return this.puerta;
     }
     
 }

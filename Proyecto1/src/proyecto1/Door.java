@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package proyecto1;
-import static javafxapplication7.Output_calc.Output_calc_Door;
+import static proyecto1.Output_calc.Output_calc_Door;
 /**
  *
  * @author User
@@ -57,6 +57,11 @@ public class Door {
     public void deleteEntrada(String i){
         this.Entradas.remove(Integer.parseInt(i));
     }
+
+    public void setEntradas(Lista<Door> Entradas) {
+        this.Entradas = Entradas;
+    }
+    
     
 }
 

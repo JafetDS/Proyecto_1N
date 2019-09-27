@@ -32,10 +32,10 @@ import javafx.scene.layout.Pane;
 
 
 public class FXMLDocumentController implements Initializable {
-    public Door Conector;
-    public Lista<Door> Sistema;
-    public int num=0;
-    public Lista<Button> Leds;
+    private Door Conector;
+    private Lista<Door> Sistema;
+    private int num=0;
+    private Lista<Button> Leds;
     @FXML
     public AnchorPane anchorpane;
     public Button button1;
@@ -55,8 +55,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Listo(MouseEvent event) {
         System.out.println("fuck You!");
-   //    label.setText("Hello World!");
+        Pane paneichon=(Pane)event.getSource();
+        Button button=new Button("Prueba");
+        button.setLayoutX(paneichon.getLayoutX());
+        button.setLayoutY(paneichon.getLayoutY());
+        scrollpane.getChildren().add(button);
+        
     }
+    
+    private void Prueba(ActionEvent e) {
+        System.out.println("Boi"); 
+    }
+    
     @FXML
     private void replace(MouseEvent event,String type,double X,double Y){
         Pane newpane =  new  Pane();
@@ -65,9 +75,10 @@ public class FXMLDocumentController implements Initializable {
 
         Pane oldpane=(Pane) event.getSource();
 
-        scrollpane.getChildren().add(oldpane);
+      //  scrollpane.getChildren().add(oldpane);
       //  scrollpane.toBack();
         oldpane.toFront();
+        scrollpane.getChildren().add(oldpane);
               
         newpane.setLayoutX(X);
         newpane.setLayoutY(Y);
@@ -88,22 +99,34 @@ public class FXMLDocumentController implements Initializable {
             createDoor(oldpane,type);
         }
     }
-    @FXML
     private void preConectar(MouseEvent event,Door puerta){
+        System.out.println(puerta.getSalida());
         this.Conector=puerta;             
     }
-    @FXML
+    
+    private void preConectar(Door puerta){
+        this.Conector=puerta;     
+    }
     private void Conectar(MouseEvent event,Door puerta){
         if (this.Conector!=null){
             puerta.setEntrada(this.Conector);
             this.Conector=null;       
-        }
+        }invokeall_led();
+    }
+    
+ 
+    private void Conectar(Door puerta){
+        if (this.Conector!=null){
+            puerta.setEntrada(this.Conector);
+            this.Conector=null;       
+        }//invokeall_led();
     }
     private void invokeall_led(){
         Nodo<Button>aux=this.Leds.getHead();
-        while(aux.getNext()!=null){
-            aux.getNext().getDato().fire();
-        }
+        while(aux!=null){
+            aux.getDato().fire();
+            aux=aux.getNext();
+        } 
     }
     
     
@@ -114,94 +137,101 @@ public class FXMLDocumentController implements Initializable {
             but.setStyle("-fx-background-color: " + "blue");
         }else{
           but.setStyle("-fx-background-color: " + "black");  
-        }this.Conector=interruptor;
-        //invokeall_led();
-    }
-    private void pressOnoffled(MouseEvent event,Led led){
-        System.out.println("Maria");
-        Button but=(Button)event.getSource();
+        }
+        preConectar(interruptor);
+ 
+        invokeall_led();
         
+    }
+    private void pressOnoffled(ActionEvent event,Led led){
+        Button but=(Button)event.getSource();
+        if (led.getEntrada()==null){
+            Conectar(led);
+        }
         if(led.getSalida()==true){
-            System.out.println("Maria2");
             but.setStyle("-fx-background-color: " + "Green");
         }else{
-            System.out.println("Maria3");
-            but.setStyle("-fx-background-color: " + "Red");  
-        }
+            but.setStyle("-fx-background-color: " + "Red");
+            }      
     }
     
-    @FXML
-    private void createONOFF(Pane oldpane){
-        On_Off interruptor= new On_Off("In");
-        Button but = new Button();
-        oldpane.getChildren().add(but);
-        but.setOnMouseClicked(e -> pressOnoff(e,interruptor));
-     
-    }
+
     @FXML
     private void createDoor (Pane oldpane,String type){
         Door puerta=new Door(type);
         this.Sistema.addFirst(puerta);
         float x=10;
-        float y=10;        
+        float y=10;     
+        
+        Button Out=new Button();
+
+        oldpane.getChildren().add(Out);
+        Out.setLayoutX(40);
+        Out.setLayoutY(25);
+        Out.setPrefSize(7, 7);
+        Out.setMinSize(7, 7);
         for(int i=0;i<2;i++){
             Button but=new Button ();
+            but.setOnMouseClicked(e -> Conectar(e,puerta));
             oldpane.getChildren().add(but);
             but.setId(Integer.toString(i));
             but.setLayoutX(x);
             but.setLayoutY(y);
             but.setPrefSize(7, 7);
             but.setMinSize(7, 7);
-            puerta.setEntrada(null);
-            but.setOnMouseClicked(e -> Conectar(e,puerta));
             y+=15;
+            Out.setOnMouseClicked(e -> preConectar(e,puerta));
         }   
-        Button Out=new Button();
-        Out.setOnMouseClicked(e -> preConectar(e,puerta));
-        oldpane.getChildren().add(Out);
-        Out.setLayoutX(40);
-        Out.setLayoutY(25);
-        Out.setPrefSize(7, 7);
-        Out.setMinSize(7, 7);
+
     }
     @FXML  
     private void createLed(Pane oldpane){
         Led led= new Led("led");
         Button but = new Button();
         oldpane.getChildren().add(but);
-        but.setOnMouseClicked(e -> pressOnoffled(e,led));  
-       // this.Leds.addFirst(but);
+        but.setOnAction(e -> pressOnoffled(e,led));
+        this.Leds.addFirst(but);
+    }
+    @FXML
+    private void createONOFF(Pane oldpane){
+        On_Off interruptor= new On_Off("In");
+        Button but = new Button();
+        oldpane.getChildren().add(but);
+        but.setOnMouseClicked(e -> pressOnoff(e,interruptor));
+       // but.setOnAction(e -> invokeall_led(e));
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.Sistema=new Lista();
+        this.Leds=new Lista();
+       // this.Conector=null;
         MouseControlUtil.makeDraggable(paneOr);
-        paneOr.setOnMouseClicked(e -> replace(e,"and",20,10));     
+        paneOr.setOnMouseClicked(e -> replace(e,"or",720,10));     
         
         MouseControlUtil.makeDraggable(paneAnd);
-        paneAnd.setOnMouseClicked(e -> replace(e,"or",20,80));  
+        paneAnd.setOnMouseClicked(e -> replace(e,"and",720,80));  
         
         MouseControlUtil.makeDraggable(paneNOr);
-        paneNOr.setOnMouseClicked(e -> replace(e,"nor",20,150));  
+        paneNOr.setOnMouseClicked(e -> replace(e,"nor",720,150));  
         
         MouseControlUtil.makeDraggable(paneNAnd);
-        paneNAnd.setOnMouseClicked(e -> replace(e,"nand",20,220)); 
+        paneNAnd.setOnMouseClicked(e -> replace(e,"nand",720,220)); 
         
         MouseControlUtil.makeDraggable(paneXor);
-        paneXor.setOnMouseClicked(e -> replace(e,"xor",20,290)); 
+        paneXor.setOnMouseClicked(e -> replace(e,"xor",720,290)); 
         
         MouseControlUtil.makeDraggable(paneXnor);
-        paneXnor.setOnMouseClicked(e -> replace(e,"xnor",20,360)); 
+        paneXnor.setOnMouseClicked(e -> replace(e,"xnor",720,360)); 
         
         
         
         
         MouseControlUtil.makeDraggable(In);
-        In.setOnMouseClicked(e -> replace(e,"In",63,480));
+        In.setOnMouseClicked(e -> replace(e,"In",720,490));
         
         MouseControlUtil.makeDraggable(Led);
-        Led.setOnMouseClicked(e -> replace(e,"led",14,471));
+        Led.setOnMouseClicked(e -> replace(e,"led",765,471));
         
         
        

@@ -12,7 +12,7 @@ package proyecto1;
  */
 public class Lista<T> {
     private Nodo<T> head;
-    private Nodo<T> tile;
+
     private int len;
    
     /**
@@ -22,7 +22,7 @@ public class Lista<T> {
     public Lista(){
    
         head=null;
-        tile=null;
+
         len=0;        
     }
 
@@ -87,7 +87,7 @@ public class Lista<T> {
     public void addFirst(){
         if (this.head==null){
             this.head= new Nodo();
-            this.tile= this.head;
+
         }
         else{
             Nodo<T> temp= this.head;
@@ -102,34 +102,24 @@ public class Lista<T> {
      */
     public void addFirst(T dato){
         if (this.head==null){
-            this.head= new Nodo(dato);
-            this.tile= this.head;
-            
+            this.head= new Nodo(dato);           
         }
         else{
             Nodo<T> temp= this.head;
-            this.head= new Nodo();
+            this.head= new Nodo(dato);
             this.head.setNext(temp);
         }
         len++;
     }
-    /**
-     * Metodo para agregar un dato al final de la lista
-     * @param dato 
-     */
-    public void add(T dato){
-        Nodo<T> aux= new Nodo<>(dato);
-        if (this.head==null){
-            this.head=aux;
-            this.tile=aux;
-            this.len ++;
-            return;
-        }           
-        
-    this.tile.setNext(aux);
-    this.tile=aux;
-    this.len ++;
+    
+    public void addLast(T dato ){
+        Nodo<T> aux=this.head;
+        while(aux.getNext()!=null){
+            aux=aux.getNext();
+        }
+        aux.setNext(new Nodo(dato));
     }
+
     /**
      * Metodo para agregar un dato a una posicion dada de la lista
      * @param i 
@@ -138,19 +128,8 @@ public class Lista<T> {
     public void add(int i,T dato){
         
         if (i==0){
-           Nodo<T> aux=new Nodo(dato);
-           aux.setNext(head);
-           this.head=aux;
-           len++;
+           addFirst(dato);
            return;
-        }
-        if(this.head==null){
-            this.head= new Nodo<>(dato);
-            return;
-        }
-        if (i==this.len-1){
-            add(dato);
-            return ;
         }
         if (i==len){
             return ;
@@ -207,11 +186,19 @@ public class Lista<T> {
             cont++;
             aux= aux.getNext();
         }
-        if (aux.getNext().getNext()==this.tile){
-            aux.setNext(null);
-            tile=aux;
-            return;
-        }
         aux.setNext(aux.getNext().getNext());
     }  
+    public void delete_all(T dato){
+        this.addFirst();
+        Nodo<T>aux=this.head;
+        while(aux.getNext()!=null){
+            if (aux.getNext().getDato()==dato){
+                aux.setNext(aux.getNext().getNext());             
+            }else{
+                aux=aux.getNext();   
+            }
+        } 
+        
+        this.removeFirst();
+    }
 }
