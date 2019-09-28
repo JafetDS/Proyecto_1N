@@ -41,11 +41,13 @@ public class FXMLDocumentController implements Initializable {
     private Door Conector;
     private Lista<Door> Sistema;
     private int num=0;
-    public Lista<Lista> Circuito;
+   // public Lista<Lista> Circuito;
     public Lista<Pane> Compuertas;
-    private Lista<Button> Leds;
+    private Lista<Led> Outs;
     public Lista<On_Off> Ins;
     public Lista<Lineas> lines;
+    
+    private Lista<Button> Leds;
     public Lineas actualline;
     
     @FXML
@@ -60,15 +62,39 @@ public class FXMLDocumentController implements Initializable {
     public Pane paneXnor;
     public Pane Led;
     public Pane In;
+    public ScrollPane Scrolin;
     public AnchorPane scrollpane;
     public TextField cantidad;
-   
+    public Pane TemporalPane;
+    public Button Eliminar;
+    
+    @FXML 
+    private void Delete_Door(){
+       scrollpane.getChildren().remove(this.TemporalPane);
+       delete_all_lines();
+       
+       
+    }
+    private void delete_all_lines(){
+        Nodo<Lineas>aux=this.lines.getHead();
+        while(aux!=null){
+            if(aux.getDato().delete_line(this.TemporalPane)){
+                System.out.print("a");
+              this.scrollpane.getChildren().remove(aux.getDato().getLinea());
+            }
+        aux=aux.getNext();
+            
+        } 
+    }   
+        
+        
+    
 
 
     
     
     
-    private void MakeLine(ActionEvent event){ 
+    private void MakeLine(MouseEvent event){ 
             Button but=(Button) event.getSource(); 
             Lineas linea; 
         try {
@@ -92,16 +118,7 @@ public class FXMLDocumentController implements Initializable {
             //ActualiceLines();
         }
     }
-    private void MakeLine2(ActionEvent event){
-        if (this.actualline!=null){
-            Button but=(Button) event.getSource();
-            this.actualline.setPoitB(but);
-            this.actualline.ubicate();
-            this.lines.addFirst(this.actualline);
-            this.actualline=null;
-           // ActualiceLines();
-        }
-    }
+
     
     
     private void  ActualiceLines(){
@@ -115,10 +132,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     public void Guardar(ActionEvent event){
-        this.Circuito.addFirst(this.Compuertas);
-        this.Circuito.addFirst(this.Leds);
-        this.Circuito.addFirst(this.Ins);
-        this.Circuito.addFirst(this.lines);
+    
         System.out.print("Guardado");
     
     }
@@ -134,6 +148,8 @@ public class FXMLDocumentController implements Initializable {
     private void Listo(MouseEvent event) {
         System.out.println("fuck You!");
         ActualiceLines();
+        Pane temporalpane=(Pane)event.getSource();
+        this.TemporalPane=temporalpane;
 
         
     }
@@ -153,11 +169,12 @@ public class FXMLDocumentController implements Initializable {
       //  scrollpane.getChildren().add(oldpane);
       //  scrollpane.toBack();
         oldpane.toFront();
-        scrollpane.getChildren().add(oldpane);
+        this.scrollpane.getChildren().add(oldpane);
+      
               
         newpane.setLayoutX(X);
         newpane.setLayoutY(Y);
-        newpane.setStyle("-fx-background-color: " + "Green");
+        newpane.setStyle("-fx-background-color: " + "White");
         newpane.setBackground(oldpane.getBackground());
         newpane.setOnMouseClicked(e -> replace(e,type,X,Y));  
         newpane.setId(Integer.toString(num));
@@ -174,7 +191,7 @@ public class FXMLDocumentController implements Initializable {
             createDoor(oldpane,type);
         }
     }
-    private void preConectar(MouseEvent event,Door puerta){
+    private void preConectar(ActionEvent event,Door puerta){
         System.out.println(puerta.getSalida());
         this.Conector=puerta;  
     }
@@ -182,7 +199,7 @@ public class FXMLDocumentController implements Initializable {
     private void preConectar(Door puerta){
         this.Conector=puerta;     
     }
-    private void Conectar(MouseEvent event,Door puerta){
+    private void Conectar(ActionEvent event,Door puerta){
         if (this.Conector!=null){
             puerta.setEntrada(this.Conector);
             this.Conector=null;       
@@ -206,7 +223,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     
-    private void pressOnoff(MouseEvent event,On_Off interruptor){
+    private void pressOnoff(ActionEvent event,On_Off interruptor){
         Button but=(Button)event.getSource();
         interruptor.setSalida();
         if(interruptor.getSalida()==true){
@@ -245,7 +262,7 @@ public class FXMLDocumentController implements Initializable {
         Out.setPrefSize(7, 7);
         Out.setMinSize(7, 7);
         Out.setId("O<"+Integer.toString(num)+">"); 
-        Out.setOnMouseClicked(e -> preConectar(e,puerta)); 
+        Out.setOnAction(e -> preConectar(e,puerta)); 
         
         Label tiket=new Label();
         tiket.setLayoutX(70);
@@ -272,8 +289,8 @@ public class FXMLDocumentController implements Initializable {
         
         for(int i=0;i<cantidad_de_entradas;i++){
             Button but=new Button ();
-            but.setOnMouseClicked(e -> Conectar(e,puerta));
-            but.setOnAction(e -> MakeLine2(e));
+            but.setOnAction(e -> Conectar(e,puerta));
+            but.setOnMouseClicked(e -> MakeLine2(e));
             oldpane.getChildren().add(but);
             but.setId("i<"+Integer.toString(i)+">");
             but.setLayoutX(x);
@@ -290,7 +307,8 @@ public class FXMLDocumentController implements Initializable {
             oldpane.getChildren().add(tiketIN);
             
             y+=15;
-        }Out.setOnAction(e -> MakeLine(e));
+        }Out.setOnMouseClicked(e -> MakeLine(e));
+        this.Compuertas.addFirst(oldpane);
 
     }
     @FXML  
@@ -306,16 +324,18 @@ public class FXMLDocumentController implements Initializable {
         tiketIN.setPrefSize(40, 20);
         tiketIN.setText("Out<"+Integer.toString(num)+">");
         oldpane.getChildren().add(tiketIN);
+        led.setNombre("Out<"+Integer.toString(num)+">");
       //  but.setOnAction(e -> MakeLine(e));
         
         but.setOnMouseClicked(e -> MakeLine2(e));
+        this.Outs.addFirst(led);
     }
     @FXML
     private void createONOFF(Pane oldpane){
         On_Off interruptor= new On_Off("In");
         Button but = new Button();
         oldpane.getChildren().add(but);
-        but.setOnMouseClicked(e -> pressOnoff(e,interruptor));
+        but.setOnAction(e -> pressOnoff(e,interruptor));
        // but.setOnAction(e -> invokeall_led(e));
         Label tiketIN=new Label();
         tiketIN.setLayoutX(10);
@@ -323,7 +343,8 @@ public class FXMLDocumentController implements Initializable {
         tiketIN.setPrefSize(40, 20);
         tiketIN.setText("In<"+Integer.toString(num)+">");
         oldpane.getChildren().add(tiketIN);
-        but.setOnAction(e -> MakeLine(e));
+        but.setOnMouseClicked(e -> MakeLine(e));
+        this.Ins.addFirst(interruptor);
     }
     
     @Override
@@ -331,10 +352,9 @@ public class FXMLDocumentController implements Initializable {
         this.Sistema=new Lista();
         this.Leds=new Lista();
         this.lines=new Lista();
-        
-        this.Compuertas=new Lista();
-   
         this.Ins= new Lista();
+        this.Outs= new Lista();
+        this.Compuertas= new Lista();
 
         
        // this.Conector=null;

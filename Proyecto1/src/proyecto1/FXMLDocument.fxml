@@ -27,6 +27,7 @@
                </font>
             </Label>
             <TextField fx:id="cantidad" layoutX="1000.0" layoutY="610.0" prefHeight="25.0" prefWidth="40.0" text="2" />
+            <Button fx:id="Eliminar" layoutX="14.0" layoutY="650.0" mnemonicParsing="false" onAction="#Delete_Door" text="Eliminar" />
             <ScrollPane layoutX="4.0" layoutY="5.0" prefHeight="578.0" prefWidth="984.0">
                <content>
                 <AnchorPane fx:id="scrollpane" minHeight="0.0" minWidth="0.0" prefHeight="5000.0" prefWidth="8000.0" />

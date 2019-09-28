@@ -31,6 +31,7 @@ public class Lineas {
         this.continer.getChildren().add(this.linea); 
         this.color=Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato(); 
         this.linea.setStyle("-fx-stroke:"+ this.color); 
+        
             
       //  getRandomNumber()
     }
@@ -62,6 +63,24 @@ public class Lineas {
         this.linea.setEndY( ((this.pointB.getParent().getLayoutY())+(this.pointB.getLayoutY())) );
 
     }
+     public boolean delete_line(Pane pane){
+         if(this.pointA.getParent()==pane){
+             return true;
+             
+         }
+        if(this.pointB.getParent()==pane){
+             return true;
+             
+         }else{
+            return false;
+        }
+        
+     }
+
+    public Line getLinea() {
+        return linea;
+    }
+     
     
     
 }
