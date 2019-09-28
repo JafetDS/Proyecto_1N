@@ -33,13 +33,15 @@ public class Proyecto1 extends Application {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.lang.IllegalAccessException
      */
     public static void main(String[] args) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException  {
         Lista<Door> Nodos=new Lista();
     
 //        Lista<String> Lista_Color=Singleton.getInstance().getLista_Color();
        // System.out.println(Lista_Color.len());
-        System.out.println(Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato());
+//        System.out.println(Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato());
         
         
         launch(args);

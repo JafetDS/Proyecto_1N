@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="694.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto1.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="694.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto1.FXMLDocumentController">
    <children>
-      <Pane fx:id="pane" prefHeight="694.0" prefWidth="798.0" style="-fx-background-color: red;">
+      <Pane fx:id="pane" prefHeight="694.0" prefWidth="1111.0" style="-fx-background-color: red;">
          <children>
-            <Pane fx:id="Led" layoutX="765.0" layoutY="471.0" prefHeight="55.0" prefWidth="27.0" style="-fx-background-color: blue;" />
-            <Pane fx:id="In" layoutX="720.0" layoutY="490.0" prefHeight="31.0" prefWidth="33.0" style="-fx-background-color: grey;" />
-            <Pane fx:id="paneNAnd" layoutX="720.0" layoutY="220.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: Blue;" />
-            <Pane fx:id="paneXnor" layoutX="720.0" layoutY="360.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: purple;" />
-            <Pane id="or" fx:id="paneOr" layoutX="720.0" layoutY="10.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: yellow;" />
-            <Pane fx:id="paneAnd" layoutX="720.0" layoutY="80.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: skyblue;" />
-            <Pane fx:id="paneXor" layoutX="720.0" layoutY="290.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: green;" />
-            <Pane fx:id="paneNOr" layoutX="720.0" layoutY="150.0" prefHeight="55.0" prefWidth="71.0" style="-fx-background-color: Orange;" />
-            <Button fx:id="Guardar" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" text="Guardar" />
-            <ScrollPane layoutX="4.0" layoutY="5.0" prefHeight="522.0" prefWidth="707.0">
+            <Pane fx:id="Led" layoutX="1060.0" layoutY="471.0" prefHeight="55.0" prefWidth="27.0" style="-fx-background-color: blue;" />
+            <Pane fx:id="In" layoutX="1000.0" layoutY="490.0" prefHeight="31.0" prefWidth="33.0" style="-fx-background-color: grey;" />
+            <Pane fx:id="paneNAnd" layoutX="1000.0" layoutY="220.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: Blue;" />
+            <Pane fx:id="paneXnor" layoutX="1000.0" layoutY="360.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: purple;" />
+            <Pane id="or" fx:id="paneOr" layoutX="1000.0" layoutY="10.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: yellow;" />
+            <Pane fx:id="paneAnd" layoutX="1000.0" layoutY="80.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: skyblue;" />
+            <Pane fx:id="paneXor" layoutX="1000.0" layoutY="290.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: green;" />
+            <Pane fx:id="paneNOr" layoutX="1000.0" layoutY="150.0" prefHeight="55.0" prefWidth="106.0" style="-fx-background-color: Orange;" />
+            <Button fx:id="guardar" layoutX="14.0" layoutY="600.0" mnemonicParsing="false" onAction="#Guardar" text="Guardar" />
+            <Label layoutX="860.0" layoutY="600.0" prefHeight="37.0" prefWidth="138.0" text="Cantidad de Entradas:" textFill="#11e15a" underline="true" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cantidad" layoutX="1000.0" layoutY="610.0" prefHeight="25.0" prefWidth="40.0" text="2" />
+            <ScrollPane layoutX="4.0" layoutY="5.0" prefHeight="578.0" prefWidth="984.0">
                <content>
-                <AnchorPane fx:id="scrollpane" minHeight="0.0" minWidth="0.0" prefHeight="1015.0" prefWidth="3328.0" />
+                <AnchorPane fx:id="scrollpane" minHeight="0.0" minWidth="0.0" prefHeight="5000.0" prefWidth="8000.0" />
                </content>
             </ScrollPane>
          </children>

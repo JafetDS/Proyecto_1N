@@ -6,6 +6,8 @@
 package proyecto1;
 
 import java.lang.reflect.Field;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 /**
@@ -29,20 +31,21 @@ public class Singleton {
  
     }        
     
-    private Lista<String> allColors() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
-            Lista<String> colors = new Lista();
-            Class clazz = Class.forName("javafx.scene.paint.Color");
-            if (clazz != null) {
-                Field[] field = clazz.getFields();
-                for (Field f : field) {                
-                    Object obj = f.get(null);
-                    if(obj instanceof Color){
-                        colors.addFirst(f.getName());
-                    }
-                }
-            }
-       return colors;
-    }
+    private Lista<String> allColors() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException { 
+            Lista<String> colors = new Lista(); 
+            Class clazz = Class.forName("javafx.scene.paint.Color"); 
+            if (clazz != null) { 
+                Field[] field = clazz.getFields(); 
+                for (Field f : field) {                 
+                    Object obj = f.get(null); 
+                    if(obj instanceof Color){ 
+                        colors.addFirst(f.getName()); 
+                    } 
+                } 
+            } 
+       return colors; 
+    } 
+      
      
   
     // static method to create instance of Singleton class 

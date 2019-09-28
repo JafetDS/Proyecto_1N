@@ -6,6 +6,8 @@
 package proyecto1;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -23,14 +25,26 @@ public class Lineas {
     private Line linea;
     private String color;
     
-    public Lineas( Pane continer) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException{
-        this.continer=continer;
-        this.linea=new Line();
-        this.continer.getChildren().add(this.linea);
-        this.color=Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato();
-        this.linea.setStyle("-fx-stroke:"+ this.color);
+    public Lineas( Pane continer) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException{ 
+        this.continer=continer; 
+        this.linea=new Line(); 
+        this.continer.getChildren().add(this.linea); 
+        this.color=Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato(); 
+        this.linea.setStyle("-fx-stroke:"+ this.color); 
+            
       //  getRandomNumber()
     }
+    
+    /**
+     *
+  
+     */
+    //public void setColor() throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException{
+      
+      //  this.color=Singleton.getInstance().getLista_Color().getNodo(getRandomNumber()).getDato();
+      //  this.linea.setStyle("-fx-stroke:"+ this.color);
+
+   // }
 
     public void setPoitA(Button pointA) {
         this.pointA = pointA;
